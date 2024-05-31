@@ -32,30 +32,55 @@ const posts = [
   }
 ];
 
+const TopBar = ({ logo, links }) => {
+  return (
+    <header className="top-bar">
+      <div className="logo">{logo}</div>
+      <nav className="nav-links">
+        {links.map((link, index) => (
+          <a key={index} href={link.href}>{link.text}</a>
+        ))}
+      </nav>
+    </header>
+  );
+};
+
+const BlogPost = ({ title, date, author, image, body }) => {
+  return (
+    <article className="blog-post">
+      <h2 className="post-title">{title}</h2>
+      <p className="post-meta">
+        Published on <span className="post-date">{date}</span> by <span className="post-author">{author}</span>
+      </p>
+      <img className="post-image" src={image} alt="Descriptive" />
+      <div className="post-body">
+        <p>{body}</p>
+      </div>
+      <hr />
+    </article>
+  );
+};
+
 function App() {
+  const links = [
+    { href: "#", text: "Home" },
+    { href: "#", text: "About" },
+    { href: "#", text: "Contact" }
+  ];
+
   return (
     <div className="App">
-      <header className="top-bar">
-        <div className="logo">SK News</div>
-        <nav className="nav-links">
-          <a href="#">Home</a>
-          <a href="#">About</a>
-          <a href="#">Contact</a>
-        </nav>
-      </header>
+      <TopBar logo="My Blog" links={links} />
       <main className="blog-posts">
         {posts.map((post, index) => (
-          <article key={index} className="blog-post">
-            <h2 className="post-title">{post.title}</h2>
-            <p className="post-meta">
-              Published on <span className="post-date">{post.date}</span> by <span className="post-author">{post.author}</span>
-            </p>
-            <img className="post-image" src={post.image} alt="Descriptive" />
-            <div className="post-body">
-              <p>{post.body}</p>
-            </div>
-            <hr />
-          </article>
+          <BlogPost
+            key={index}
+            title={post.title}
+            date={post.date}
+            author={post.author}
+            image={post.image}
+            body={post.body}
+          />
         ))}
       </main>
     </div>
